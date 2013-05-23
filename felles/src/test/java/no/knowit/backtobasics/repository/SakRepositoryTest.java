@@ -59,6 +59,16 @@ public abstract class SakRepositoryTest {
     }
 
     @Test
+    public void hent_sak_som_ikke_finnes() {
+        SakRepository sakRepository = getSakRepository();
+
+        Sak sak = sakRepository.hentSak(1);
+        log.debug("Hentet sak: " + sak);
+
+        assertThat(sak, is(nullValue()));
+    }
+
+    @Test
     public void hent_alle_saker() {
         SakRepository sakRepository = getSakRepository();
         Sak sak1 = sakRepository.opprettSak("foo");
