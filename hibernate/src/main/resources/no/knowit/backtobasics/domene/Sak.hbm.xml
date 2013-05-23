@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="no.knowit.backtobasics.domene">
+
+    <class name="Sak" table="SAK">
+        <id name="id" column="ID">
+            <generator class="native"/>
+        </id>
+        <property name="tittel"/>
+        <property name="opprettet" type="timestamp" column="OPPRETTET"/>
+    </class>
+
+</hibernate-mapping>
