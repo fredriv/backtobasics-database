@@ -1,9 +1,10 @@
 package no.knowit.backtobasics.repository;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import java.util.Date;
+import java.util.List;
 
 import no.knowit.backtobasics.domene.Sak;
 
@@ -55,6 +56,20 @@ public abstract class SakRepositoryTest {
         assertThat(sak.getId(), is(equalTo(id)));
         assertThat(sak.getTittel(), is("tittel"));
         assertThat(sak.getOpprettet().getTime(), is(greaterThanOrEqualTo(start.getTime())));
+    }
+
+    @Test
+    public void hent_alle_saker() {
+        SakRepository sakRepository = getSakRepository();
+        Sak sak1 = sakRepository.opprettSak("foo");
+        Sak sak2 = sakRepository.opprettSak("bar");
+
+        List<Sak> saker = sakRepository.hentAlleSaker();
+        log.debug("Hentet saker: " + saker);
+
+        assertThat(saker, is(not(nullValue())));
+        assertThat(saker.size(), is(equalTo(2)));
+        assertThat(saker, hasItems(sak1, sak2));
     }
 
 }
