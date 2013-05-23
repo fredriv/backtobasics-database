@@ -10,6 +10,20 @@ public class Sak {
 
     private Date opprettet;
 
+    private Sak() {
+        /* For Hibernate */
+    }
+
+    public Sak(String tittel, Date opprettet) {
+        this(null, tittel, opprettet);
+    }
+
+    public Sak(Integer id, String tittel, Date opprettet) {
+        this.id = id;
+        this.tittel = tittel;
+        this.opprettet = opprettet;
+    }
+
     public Integer getId() {
         return id;
     }
