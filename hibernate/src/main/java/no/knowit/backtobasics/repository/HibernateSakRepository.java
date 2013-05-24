@@ -1,10 +1,13 @@
 package no.knowit.backtobasics.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import no.knowit.backtobasics.domene.Sak;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateSakRepository implements SakRepository {
@@ -21,20 +24,34 @@ public class HibernateSakRepository implements SakRepository {
 
     @Override
     public Sak opprettSak(String tittel) {
-        // TODO Auto-generated method stub
-        return null;
+        Sak sak = new Sak(tittel, new Date());
+
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+
+        session.persist(sak);
+
+        tx.commit();
+        session.close();
+
+        return sak;
     }
 
     @Override
     public Sak hentSak(int sakId) {
-        // TODO Auto-generated method stub
-        return null;
+        Session session = sessionFactory.openSession();
+        Sak sak = (Sak) session.get(Sak.class, sakId);
+        session.close();
+        return sak;
     }
 
     @Override
     public List<Sak> hentAlleSaker() {
-        // TODO Auto-generated method stub
-        return null;
+        Session session = sessionFactory.openSession();
+        @SuppressWarnings("unchecked")
+        List<Sak> saker = session.createQuery("from Sak").list();
+        session.close();
+        return saker;
     }
 
     @Override
