@@ -1,6 +1,7 @@
 package no.knowit.backtobasics.repository
 
-import scala.slick.driver.DerbyDriver.simple._
+// import scala.slick.driver.DerbyDriver.simple._
+import scala.slick.driver.H2Driver.simple._
 import scala.collection.JavaConversions._
 
 import java.sql.Timestamp

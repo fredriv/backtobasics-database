@@ -8,8 +8,10 @@
     <session-factory>
 
         <!-- Database connection settings -->
-        <property name="connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
-        <property name="connection.url">jdbc:derby:memory:test;create=true</property>
+        <!-- property name="connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
+        <property name="connection.url">jdbc:derby:memory:test;create=true</property -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:mem:test1</property>
         <property name="connection.username"/>
         <property name="connection.password"/>
 
@@ -17,7 +19,8 @@
         <property name="connection.pool_size">1</property>
 
         <!-- SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.DerbyTenSevenDialect</property>
+        <!-- property name="dialect">org.hibernate.dialect.DerbyTenSevenDialect</property -->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
 
         <!-- Disable the second-level cache  -->
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
