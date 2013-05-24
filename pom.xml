@@ -127,5 +127,6 @@
         <module>felles</module>
         <module>hibernate</module>
         <module>slick</module>
+        <module>jdbctemplate</module>
     </modules>
 </project>
