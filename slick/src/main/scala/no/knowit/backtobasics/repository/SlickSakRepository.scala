@@ -17,21 +17,52 @@ class SlickSakRepository extends SakRepository {
 //  val db = Database.forURL("jdbc:h2:mem:test1", driver = "org.h2.Driver")
   
   db withSession {
-    // TODO create schema
+    SakTable.ddl.create
   }
 
   def taNedSakRepository {
-    // TODO drop schema
+    db withSession {
+      SakTable.ddl.drop
+    }
   }
   
-  def opprettSak(tittel: String) = null
+  def opprettSak(tittel: String) = db withSession {
+    val opprettet = new Timestamp(new Date().getTime())
+    val id = SakTable.forInsert returning SakTable.id insert (tittel, opprettet)
+    new Sak(id, tittel, opprettet)
+  }
   
-  def hentSak(id: Int) = null
+  def hentSak(id: Int) = db withSession {
+    val q = Query(SakTable).filter(sak => sak.id === id)
+    q.firstOption.map {
+      case((id, tittel, opprettet)) => new Sak(id.get, tittel, opprettet)
+    }.getOrElse(null)
+  }
   
-  def hentAlleSaker() = Nil
+  def hentAlleSaker() = db withSession {
+    Query(SakTable).list.map {
+      case((id, tittel, opprettet)) => new Sak(id.get, tittel, opprettet)
+    }
+  }
   
   def oppdaterSak(sak: Sak) {}
   
   def slettSak(sak: Sak) {}
   
 }
+
+object SakTable extends Table[(Option[Int], String, Timestamp)]("SAK") {
+  def id = column[Int]("ID", O.PrimaryKey, O.AutoInc)
+  def tittel = column[String]("TITTEL")
+  def opprettet = column[Timestamp]("OPPRETTET")
+  
+  def * = id.? ~ tittel ~ opprettet
+  def forInsert = tittel ~ opprettet
+}
+
+
+
+
+
+
+
